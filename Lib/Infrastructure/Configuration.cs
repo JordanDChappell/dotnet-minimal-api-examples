@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Lib.Model.Todo;
 using Lib.Repository;
+using Lib.Service.Todo;
 
 namespace Lib.Infrastructure
 {
@@ -22,7 +23,8 @@ namespace Lib.Infrastructure
 
     public static IServiceCollection ConfigureDependencies(this IServiceCollection services) => services
         .AddDbContext<TodoRepository>(opt => opt.UseInMemoryDatabase("TodoList"))
-        .AddDatabaseDeveloperPageExceptionFilter();
+        .AddDatabaseDeveloperPageExceptionFilter()
+        .AddTransient<TodoService>();
 
     public static void SeedTodoRepository(this IServiceProvider serviceProvider)
     {

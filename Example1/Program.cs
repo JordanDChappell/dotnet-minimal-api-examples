@@ -1,51 +1,34 @@
-using Microsoft.EntityFrameworkCore;
-
 using Lib.Infrastructure;
-using Lib.Repository;
 using Lib.Model.Todo;
+using Lib.Service.Todo;
 
 var app = Configuration.ConfigureApplication(args);
 
 var todoItems = app.MapGroup("/todos");
 
-todoItems.MapGet("/", async (TodoRepository repo) =>
-  new { items = await repo.Todos.ToListAsync() }
+todoItems.MapGet("/", async (TodoService service) =>
+  new { items = await service.GetAllTodosAsync() }
 );
-todoItems.MapGet("/{id}", async (int id, TodoRepository repo) =>
-  await repo.Todos.FindAsync(id) is Todo todo
-      ? Results.Ok(todo)
+todoItems.MapGet("/{id}", async (int id, TodoService service) =>
+  await service.GetTodoAsync(id) is TodoResponse response
+      ? Results.Ok(response)
       : Results.NotFound()
 );
-todoItems.MapPost("/", async (TodoRequest request, TodoRepository repo) =>
+todoItems.MapPost("/", async (TodoRequest request, TodoService service) =>
 {
-  var todo = request.ToEntity();
-  repo.Add(todo);
-  await repo.SaveChangesAsync();
-  return Results.Created($"/todos/{todo.Id}", todo);
+  var response = await service.CreateTodoAsync(request);
+  return Results.Created($"/todos/{response.Id}", response);
 });
-todoItems.MapPut("/{id}", async (int id, TodoRequest request, TodoRepository repo) =>
+todoItems.MapPut("/{id}", async (int id, TodoRequest request, TodoService service) =>
 {
-  if (await repo.Todos.FindAsync(id) is Todo todo)
-  {
-    todo.Name = request.Name;
-    todo.Status = request.Status;
-    todo.LastUpdateTsUtc = DateTime.UtcNow;
-
-    await repo.SaveChangesAsync();
+  if (await service.UpdateTodoAsync(id, request) is TodoResponse response)
     return Results.NoContent();
-  }
-
   return Results.NotFound();
 });
-todoItems.MapDelete("/{id}", async (int id, TodoRepository repo) =>
+todoItems.MapDelete("/{id}", async (int id, TodoService service) =>
 {
-  if (await repo.Todos.FindAsync(id) is Todo todo)
-  {
-    repo.Todos.Remove(todo);
-    await repo.SaveChangesAsync();
+  if (await service.DeleteTodoAsync(id) is TodoResponse response)
     return Results.NoContent();
-  }
-
   return Results.NotFound();
 });
 
