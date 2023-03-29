@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -8,5 +7,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.4"/>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.4"/>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+    <PackageReference Include="Asp.Versioning.Http" Version="7.0.0"/>
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.0.0"/>
   </ItemGroup>
 </Project>

@@ -5,18 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Example1",
+      "name": "Debug Application",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "Build Example1",
-      "program": "${workspaceFolder}/Example1/bin/Debug/net7.0/Example1.dll",
+      "preLaunchTask": "Build Application",
+      "program": "${workspaceFolder}/Application/bin/Debug/net7.0/Application.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/Example1",
+      "cwd": "${workspaceFolder}/Application",
       "stopAtEntry": false,
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-      },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

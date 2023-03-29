@@ -9,7 +9,7 @@ public class TodoRequest
   {
     Name = Name,
     Status = Status,
+    CreatedTsUtc = DateTime.UtcNow,
     LastUpdateTsUtc = DateTime.UtcNow,
   };
 }
-
