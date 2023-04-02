@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Asp.Versioning;
 using Lib.Model.Todo;
 using Lib.OpenApi;
@@ -17,6 +18,7 @@ public static class Configuration
     var services = builder.Services;
     services.ConfigureApiVersioning();
     services.ConfigureSwagger();
+    services.ConfigureJsonOptions();
     services.ConfigureDependencies();
 
     var serviceProvider = services.BuildServiceProvider();
@@ -56,6 +58,21 @@ public static class Configuration
     .AddSwaggerGen(opts =>
     {
       opts.OperationFilter<SwaggerDefaultValues>();
+    });
+
+  /// <summary>
+  /// Note: Configuring two different JsonOptions instances here, one is used by .NET API framework and the other by
+  /// swagger.
+  /// </summary>
+  /// <param name="services"></param>
+  private static void ConfigureJsonOptions(this IServiceCollection services) => services
+    .Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+    {
+      options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    })
+    .Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(options =>
+    {
+      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
   private static IServiceCollection ConfigureDependencies(this IServiceCollection services) => services
