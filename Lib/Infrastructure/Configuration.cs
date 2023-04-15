@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Asp.Versioning;
+using FluentValidation;
 using Lib.Model.Todo;
 using Lib.OpenApi;
 using Lib.Repository;
@@ -19,6 +20,7 @@ public static class Configuration
     services.ConfigureApiVersioning();
     services.ConfigureSwagger();
     services.ConfigureJsonOptions();
+    services.ConfigureModelValidation();
     services.ConfigureDependencies();
 
     var serviceProvider = services.BuildServiceProvider();
@@ -74,6 +76,9 @@ public static class Configuration
     {
       options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+  private static void ConfigureModelValidation(this IServiceCollection services) => services
+    .AddValidatorsFromAssembly(typeof(Configuration).Assembly);
 
   private static IServiceCollection ConfigureDependencies(this IServiceCollection services) => services
     .ConfigureDatabase()
