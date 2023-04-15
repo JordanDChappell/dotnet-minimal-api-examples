@@ -1,7 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-
 using Lib.Model.Todo;
 using Lib.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lib.Service.Todo;
 

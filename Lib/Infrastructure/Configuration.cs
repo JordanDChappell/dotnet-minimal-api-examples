@@ -89,20 +89,20 @@ public static class Configuration
   private static void SeedTodoRepository(this IServiceProvider serviceProvider)
   {
     var repository = serviceProvider.GetRequiredService<TodoRepository>();
-    repository.AddRange(new List<Todo>() {
-      new Todo() {
+    repository.AddRange(new List<TodoEntity>() {
+      new TodoEntity() {
         Id = 1,
         Name = "Wash dishes",
         Status = TodoStatus.Incomplete,
         LastUpdateTsUtc = DateTime.Parse("2023-01-01T09:00:00").ToUniversalTime(),
       },
-      new Todo() {
+      new TodoEntity() {
         Id = 2,
         Name = "Make bed",
         Status = TodoStatus.Incomplete,
         LastUpdateTsUtc = DateTime.Parse("2023-01-01T10:00:00").ToUniversalTime(),
       },
-      new Todo() {
+      new TodoEntity() {
         Id = 3,
         Name = "Grocery shopping",
         Status = TodoStatus.Incomplete,

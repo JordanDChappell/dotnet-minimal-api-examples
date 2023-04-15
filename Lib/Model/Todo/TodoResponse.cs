@@ -7,7 +7,7 @@ public class TodoResponse
   public TodoStatus Status { get; set; }
   public DateTime LastUpdateTsUtc { get; set; }
 
-  public static TodoResponse FromEntity(Todo entity) => new TodoResponse()
+  public static TodoResponse FromEntity(TodoEntity entity) => new TodoResponse()
   {
     Id = entity.Id,
     Name = entity.Name,

@@ -8,5 +8,5 @@ public class TodoRepository : DbContext
   public TodoRepository(DbContextOptions<TodoRepository> options)
   : base(options) { }
 
-  public DbSet<Todo> Todos => Set<Todo>();
+  public DbSet<TodoEntity> Todos => Set<TodoEntity>();
 }

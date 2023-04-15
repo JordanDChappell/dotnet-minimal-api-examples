@@ -5,7 +5,7 @@ public class TodoRequest
   public string? Name { get; set; }
   public TodoStatus Status { get; set; }
 
-  public Todo ToEntity() => new Todo()
+  public TodoEntity ToEntity() => new TodoEntity()
   {
     Name = Name,
     Status = Status,

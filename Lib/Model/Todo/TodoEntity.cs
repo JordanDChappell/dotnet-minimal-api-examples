@@ -1,15 +1,9 @@
-﻿namespace Lib.Model.Todo;
+namespace Lib.Model.Todo;
 
-public enum TodoStatus
-{
-  Incomplete,
-  Complete,
-  Archived
-}
-
-public class Todo
+public class TodoEntity
 {
   public int Id { get; set; }
+  public int ProjectId { get; set; }
   public string? Name { get; set; }
   public TodoStatus Status { get; set; }
   public DateTime CreatedTsUtc { get; set; }
