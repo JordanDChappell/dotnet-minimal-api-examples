@@ -1,5 +1,6 @@
 using Lib.Model.Todo;
 using Lib.Service.Todo;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Application.Endpoints;
 
@@ -7,11 +8,16 @@ public static class TodoV1
 {
   public static RouteGroupBuilder Register(RouteGroupBuilder builder)
   {
-    // This endpoint does not follow a consistent naming pattern and returns a flat array structure.
-    // The route for this endpoint '/all' is unnecessary in a RESTful application.
     builder
       .MapGet("/all", async (TodoService service) => await service.GetAllTodosAsync())
       .WithName("GetTodosV1")
+      .WithMetadata(new SwaggerOperationAttribute(
+          "summary001",
+          "A bad example of:\n" +
+          "- Well defined method names: the /todos base route is self-describing and does not require the /all route\n" +
+          "- Consistent response structure: response is a flat array which is not consistent with other routes and is hard to extend in the future"
+      ))
+      .Produces<IEnumerable<TodoResponse>>(StatusCodes.Status200OK)
       .MapToApiVersion(1);
 
     // This endpoint is using a query parameter to fetch by a resource identifier - resources should be identified through
@@ -22,24 +28,32 @@ public static class TodoV1
     builder
       .MapGet("/item", async (int id, TodoService service) => await service.GetTodoAsync(id))
       .WithName("GetTodoV1")
+      .WithMetadata(
+        "A bad example of:\n" +
+        "- Well defined method names: "
+      )
+      .Produces<TodoResponse>(StatusCodes.Status200OK)
       .MapToApiVersion(1);
 
-    // This endpoint should be a POST with no '/create' route, a POST in a RESTful service will always create a new
-    // entity.
     builder
-      .MapGet("/create", async (TodoRequest request, TodoService service) => await service.CreateTodoAsync(request))
+      .MapGet("/create", async ([AsParameters] TodoRequest request, TodoService service) => await service.CreateTodoAsync(request))
       .WithName("CreateTodoV1")
+      .WithDescription("")
+      .Produces(StatusCodes.Status200OK)
       .MapToApiVersion(1);
 
-    // 
     builder
-      .MapGet("/update", async (int id, TodoRequest request, TodoService service) => await service.UpdateTodoAsync(id, request))
+      .MapGet("/update", async (int id, [AsParameters] TodoRequest request, TodoService service) => await service.UpdateTodoAsync(id, request))
       .WithName("UpdateTodoV1")
+      .WithDescription("")
+      .Produces(StatusCodes.Status200OK)
       .MapToApiVersion(1);
 
     builder
       .MapGet("/delete", async (int id, TodoService service) => await service.DeleteTodoAsync(id))
       .WithName("DeleteTodoV1")
+      .WithDescription("")
+      .Produces(StatusCodes.Status200OK)
       .MapToApiVersion(1);
 
     return builder;

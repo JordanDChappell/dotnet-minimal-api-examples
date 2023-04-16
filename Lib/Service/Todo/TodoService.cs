@@ -1,3 +1,4 @@
+using Lib.Model.Generics;
 using Lib.Model.Todo;
 using Lib.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,13 @@ public class TodoService
     _repository = repository;
   }
 
-  public async Task<IEnumerable<TodoResponse>> GetAllTodosAsync()
+  public async Task<ItemsResponse<TodoResponse>> GetAllTodosAsync()
   {
     var todos = await _repository.Todos.ToListAsync();
-    return todos.Select(TodoResponse.FromEntity);
+    return new ItemsResponse<TodoResponse>()
+    {
+      Items = todos.Select(TodoResponse.FromEntity),
+    };
   }
 
   public async Task<TodoResponse?> GetTodoAsync(int id)

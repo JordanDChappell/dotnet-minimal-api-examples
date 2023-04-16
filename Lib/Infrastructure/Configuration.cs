@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
 using FluentValidation;
@@ -5,6 +6,7 @@ using Lib.Model.Todo;
 using Lib.OpenApi;
 using Lib.Repository;
 using Lib.Service.Todo;
+using Lib.Validators.Todo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,6 +62,7 @@ public static class Configuration
     .AddSwaggerGen(opts =>
     {
       opts.OperationFilter<SwaggerDefaultValues>();
+      opts.EnableAnnotations();
     });
 
   /// <summary>
@@ -78,7 +81,7 @@ public static class Configuration
     });
 
   private static void ConfigureModelValidation(this IServiceCollection services) => services
-    .AddValidatorsFromAssembly(typeof(Configuration).Assembly);
+    .AddValidatorsFromAssemblyContaining<TodoRequestValidator>();
 
   private static IServiceCollection ConfigureDependencies(this IServiceCollection services) => services
     .ConfigureDatabase()
