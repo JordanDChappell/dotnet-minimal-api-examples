@@ -81,7 +81,7 @@ public static class Configuration
     });
 
   private static void ConfigureModelValidation(this IServiceCollection services) => services
-    .AddTransient<IValidator<TodoRequest>, TodoRequestValidator>();
+    .AddValidatorsFromAssemblyContaining<TodoRequestValidator>();
 
   private static IServiceCollection ConfigureDependencies(this IServiceCollection services) => services
     .ConfigureDatabase()

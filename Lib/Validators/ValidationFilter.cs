@@ -16,10 +16,7 @@ public class ValidationFilter<T> : IEndpointFilter
     {
       var validationResult = await validator.ValidateAsync(argToValidate!);
       if (!validationResult.IsValid)
-      {
-        return Results.ValidationProblem(validationResult.ToDictionary(),
-            statusCode: (int)HttpStatusCode.BadRequest);
-      }
+        return Results.ValidationProblem(validationResult.ToDictionary(), statusCode: (int)HttpStatusCode.BadRequest);
     }
 
     // Otherwise invoke the next filter in the pipeline

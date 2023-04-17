@@ -2,6 +2,7 @@ using Lib.Model.Generics;
 using Lib.Model.Todo;
 using Lib.Service.Todo;
 using Lib.Validators;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Endpoints;
 
@@ -10,14 +11,14 @@ public static class TodoV2
   public static RouteGroupBuilder Register(RouteGroupBuilder builder)
   {
     builder
-      .MapGet("/", async (TodoService service) => await service.GetAllTodosAsync())
+      .MapGet("/", async ([FromServices] TodoService service) => await service.GetAllTodosAsync())
       .WithName("GetTodosV2")
       .WithDescription("")
       .Produces<ItemsResponse<TodoResponse>>(StatusCodes.Status200OK)
       .MapToApiVersion(2);
 
     builder
-      .MapGet("/{id}", async (int id, TodoService service) =>
+      .MapGet("/{id}", async ([FromRoute] int id, [FromServices] TodoService service) =>
         await service.GetTodoAsync(id) is TodoResponse response
             ? Results.Ok(response)
             : Results.NotFound())
@@ -28,7 +29,7 @@ public static class TodoV2
       .MapToApiVersion(2);
 
     builder
-      .MapPost("/", async (TodoRequest request, TodoService service) =>
+      .MapPost("/", async ([FromBody] TodoRequest request, [FromServices] TodoService service) =>
         {
           var response = await service.CreateTodoAsync(request);
           return Results.Created($"/todos/{response.Id}", response);
@@ -42,7 +43,7 @@ public static class TodoV2
       .MapToApiVersion(2);
 
     builder
-      .MapPut("/{id}", async (int id, TodoRequest request, TodoService service) =>
+      .MapPut("/{id}", async ([FromRoute] int id, [FromBody] TodoRequest request, [FromServices] TodoService service) =>
         {
           if (await service.UpdateTodoAsync(id, request) is TodoResponse response)
             return Results.NoContent();
@@ -56,7 +57,7 @@ public static class TodoV2
       .MapToApiVersion(2);
 
     builder
-      .MapDelete("/{id}", async (int id, TodoService service) =>
+      .MapDelete("/{id}", async ([FromRoute] int id, [FromServices] TodoService service) =>
         {
           if (await service.DeleteTodoAsync(id) is TodoResponse response)
             return Results.NoContent();
