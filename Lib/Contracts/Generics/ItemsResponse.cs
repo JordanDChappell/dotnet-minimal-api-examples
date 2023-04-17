@@ -1,4 +1,4 @@
-namespace Lib.Model.Generics;
+namespace Lib.Contracts.Generics;
 
 public class ItemsResponse<TResponseType>
 {

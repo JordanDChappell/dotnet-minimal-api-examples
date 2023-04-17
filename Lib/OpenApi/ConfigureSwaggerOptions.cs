@@ -26,7 +26,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
       Title = "Example minimal API",
       Version = description.ApiVersion.ToString(),
-      Description = "A sample application with to show off web API best practices.",
+      Description = "A sample application to show off web API best practices.",
       Contact = new OpenApiContact() { Name = "Jordan Chappell", Email = "me@jordanchappell.com" },
       License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
     };

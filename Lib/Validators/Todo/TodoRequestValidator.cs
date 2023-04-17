@@ -1,5 +1,5 @@
 using FluentValidation;
-using Lib.Model.Todo;
+using Lib.Contracts.Todo;
 
 namespace Lib.Validators.Todo;
 

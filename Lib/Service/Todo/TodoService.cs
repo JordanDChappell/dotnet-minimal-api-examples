@@ -1,5 +1,5 @@
-using Lib.Model.Generics;
-using Lib.Model.Todo;
+using Lib.Contracts.Generics;
+using Lib.Contracts.Todo;
 using Lib.Repository;
 using Microsoft.EntityFrameworkCore;
 

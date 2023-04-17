@@ -1,4 +1,6 @@
-namespace Lib.Model.Todo;
+using Lib.Model.Todo;
+
+namespace Lib.Contracts.Todo;
 
 public class TodoResponse
 {
