@@ -1,6 +1,7 @@
 using Lib.Model.Generics;
 using Lib.Model.Todo;
 using Lib.Service.Todo;
+using Lib.Validators;
 
 namespace Application.Endpoints;
 
@@ -37,6 +38,7 @@ public static class TodoV2
       .Accepts<TodoRequest>("application/json")
       .Produces(StatusCodes.Status201Created)
       .Produces(StatusCodes.Status400BadRequest)
+      .AddEndpointFilter<ValidationFilter<TodoRequest>>()
       .MapToApiVersion(2);
 
     builder
@@ -50,6 +52,7 @@ public static class TodoV2
       .WithDescription("")
       .Produces(StatusCodes.Status204NoContent)
       .Produces(StatusCodes.Status400BadRequest)
+      .AddEndpointFilter<ValidationFilter<TodoRequest>>()
       .MapToApiVersion(2);
 
     builder
